@@ -158,33 +158,58 @@ function AccordionSection({
   isOpen,
   collapsed,
   onToggle,
+  onAdd,
+  addLabel,
   children,
 }: {
   label: string
   isOpen: boolean
   collapsed: boolean
   onToggle: () => void
+  onAdd?: () => void
+  addLabel?: string
   children: React.ReactNode
 }) {
   return (
     <div>
-      {/* Section header — text + chevron only, hidden when collapsed (items still render) */}
+      {/* Section header — hidden when collapsed (items still render in rail) */}
       {!collapsed && (
-        <button
-          onClick={onToggle}
-          className="flex w-full items-center rounded-md px-2.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-widest text-sidebar-foreground/30 transition-colors hover:text-sidebar-foreground/60"
-        >
-          <span className="flex-1 text-left">{label}</span>
-          <SvgIcon
-            size={12}
-            className={cn(
-              "text-sidebar-foreground/25 transition-transform duration-200",
-              isOpen && "rotate-180"
-            )}
+        <div className="group/section flex items-center">
+          {/* Label — click to toggle */}
+          <button
+            onClick={onToggle}
+            className="flex flex-1 items-center py-1.5 pl-2.5 pr-1 text-[10.5px] font-semibold uppercase tracking-widest text-sidebar-foreground/30 transition-colors hover:text-sidebar-foreground/60"
           >
-            <path d="M6 9l6 6 6-6" />
-          </SvgIcon>
-        </button>
+            <span className="flex-1 text-left">{label}</span>
+          </button>
+          {/* + action — fades in on section header hover */}
+          {onAdd && (
+            <button
+              onClick={onAdd}
+              aria-label={addLabel ?? `New ${label.toLowerCase()}`}
+              className="flex size-5 shrink-0 items-center justify-center rounded text-sidebar-foreground/25 opacity-0 group-hover/section:opacity-100 transition-opacity duration-150 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground/70"
+            >
+              <SvgIcon size={11} strokeWidth={2.5}>
+                <path d="M12 5v14M5 12h14" />
+              </SvgIcon>
+            </button>
+          )}
+          {/* Chevron — click to toggle */}
+          <button
+            onClick={onToggle}
+            className="flex size-7 shrink-0 items-center justify-center rounded transition-colors hover:text-sidebar-foreground/60"
+          >
+            <SvgIcon
+              size={12}
+              className={cn(
+                "text-sidebar-foreground/25 transition-transform duration-200",
+                isOpen && "rotate-180"
+              )}
+            >
+              <path d="M6 9l6 6 6-6" />
+            </SvgIcon>
+          </button>
+        </div>
       )}
 
       {(isOpen || collapsed) && (
@@ -264,16 +289,26 @@ function ChannelItem({
       <button
         onClick={onClick}
         className={cn(
-          "flex w-full items-center gap-2 rounded-md py-[5px] text-[13px] transition-colors",
+          "group flex w-full items-center gap-2 rounded-md py-[5px] text-[13px] transition-colors",
           "text-sidebar-foreground/50 hover:bg-sidebar-foreground/6 hover:text-sidebar-foreground",
           active && "bg-sidebar-foreground/10 text-sidebar-foreground",
-          collapsed ? "justify-center px-0" : "pl-2.5 pr-2"
+          collapsed ? "justify-center px-0" : "pl-2.5 pr-1"
         )}
       >
         <SvgIcon size={14} strokeWidth={2} className="shrink-0">
           <path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18" />
         </SvgIcon>
-        {!collapsed && <span className="flex-1 truncate text-left">{label}</span>}
+        {!collapsed && (
+          <>
+            <span className="flex-1 truncate text-left">{label}</span>
+            {/* ⋯ — appears on row hover */}
+            <span className="flex size-5 shrink-0 items-center justify-center rounded opacity-0 translate-x-0.5 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-150 text-sidebar-foreground/40 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground/70">
+              <SvgIcon size={13} strokeWidth={3}>
+                <path d="M5 12h.01M12 12h.01M19 12h.01" />
+              </SvgIcon>
+            </span>
+          </>
+        )}
       </button>
     </WithTooltip>
   )
@@ -299,9 +334,9 @@ function DMItem({
       <button
         onClick={onClick}
         className={cn(
-          "flex w-full items-center gap-2.5 rounded-md py-[5px] text-[13px] transition-colors",
+          "group flex w-full items-center gap-2.5 rounded-md py-[5px] text-[13px] transition-colors",
           "text-sidebar-foreground/60 hover:bg-sidebar-foreground/6 hover:text-sidebar-foreground",
-          collapsed ? "justify-center px-0" : "pl-2.5 pr-2"
+          collapsed ? "justify-center px-0" : "pl-2.5 pr-1"
         )}
       >
         <div className="relative shrink-0">
@@ -314,25 +349,21 @@ function DMItem({
           />
         </div>
         {!collapsed && (
-          <span className="flex-1 truncate text-left">{label}</span>
+          <>
+            <span className="flex-1 truncate text-left">{label}</span>
+            {/* ⋯ — appears on row hover */}
+            <span className="flex size-5 shrink-0 items-center justify-center rounded opacity-0 translate-x-0.5 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-150 text-sidebar-foreground/40 hover:bg-sidebar-foreground/8 hover:text-sidebar-foreground/70">
+              <SvgIcon size={13} strokeWidth={3}>
+                <path d="M5 12h.01M12 12h.01M19 12h.01" />
+              </SvgIcon>
+            </span>
+          </>
         )}
       </button>
     </WithTooltip>
   )
 }
 
-/* ─── Add row ─────────────────────────────────────────────────── */
-
-function AddRow({ label }: { label: string }) {
-  return (
-    <button className="flex items-center gap-2 rounded-md py-1 pl-2.5 pr-2 text-[12.5px] text-sidebar-foreground/25 transition-colors hover:text-sidebar-foreground/55">
-      <SvgIcon size={12} strokeWidth={2.5}>
-        <path d="M12 5v14M5 12h14" />
-      </SvgIcon>
-      {label}
-    </button>
-  )
-}
 
 /* ─── Data ────────────────────────────────────────────────────── */
 
@@ -497,6 +528,8 @@ export function Sidebar({ isDark = true, onThemeToggle, inboxCount = 0 }: Sideba
             isOpen={channelsOpen}
             collapsed={collapsed}
             onToggle={() => !collapsed && setChannelsOpen((v) => !v)}
+            onAdd={() => {}}
+            addLabel="New channel"
           >
             {CHANNELS.map((ch) => (
               <ChannelItem
@@ -507,7 +540,6 @@ export function Sidebar({ isDark = true, onThemeToggle, inboxCount = 0 }: Sideba
                 onClick={() => setActive(`ch-${ch}`)}
               />
             ))}
-            {!collapsed && <AddRow label="Add channels" />}
           </AccordionSection>
 
           <div className="mt-1" />
@@ -518,6 +550,8 @@ export function Sidebar({ isDark = true, onThemeToggle, inboxCount = 0 }: Sideba
             isOpen={dmsOpen}
             collapsed={collapsed}
             onToggle={() => !collapsed && setDmsOpen((v) => !v)}
+            onAdd={() => {}}
+            addLabel="New message"
           >
             {DMS.map((dm) => (
               <DMItem
@@ -529,7 +563,6 @@ export function Sidebar({ isDark = true, onThemeToggle, inboxCount = 0 }: Sideba
                 onClick={() => setActive(`dm-${dm.id}`)}
               />
             ))}
-            {!collapsed && <AddRow label="Add people" />}
           </AccordionSection>
         </nav>
 
