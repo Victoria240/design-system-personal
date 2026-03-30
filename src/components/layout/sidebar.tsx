@@ -305,7 +305,7 @@ function DMItem({
         )}
       >
         <div className="relative shrink-0">
-          <div className="flex size-5 items-center justify-center rounded-full bg-sidebar-foreground/10 ring-1 ring-sidebar-border text-[9px] font-semibold text-sidebar-foreground/60 select-none">
+          <div className="relative flex size-5 items-center justify-center rounded-full bg-sidebar-foreground/10 text-[9px] font-semibold text-sidebar-foreground/60 select-none after:absolute after:inset-0 after:rounded-full after:border after:border-sidebar-border after:mix-blend-darken dark:after:mix-blend-lighten">
             {initials}
           </div>
           <StatusDot
@@ -552,7 +552,7 @@ export function Sidebar({ isDark = true, onThemeToggle, inboxCount = 0 }: Sideba
                   collapsed && "mx-auto"
                 )}
               >
-                <div className="flex size-6 items-center justify-center rounded-full bg-sidebar-foreground/20 ring-1 ring-sidebar-border text-[10px] font-semibold text-sidebar-foreground select-none">
+                <div className="relative flex size-6 items-center justify-center rounded-full bg-sidebar-foreground/20 text-[10px] font-semibold text-sidebar-foreground select-none after:absolute after:inset-0 after:rounded-full after:border after:border-sidebar-border after:mix-blend-darken dark:after:mix-blend-lighten">
                   VT
                 </div>
                 <StatusDot
