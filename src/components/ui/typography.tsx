@@ -45,6 +45,7 @@ export function Typography({
 
   return (
     <Tag
+      data-slot="typography"
       className={cn(
         styles[variant],
         muted && "text-muted-foreground",

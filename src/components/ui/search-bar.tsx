@@ -16,9 +16,9 @@ type SearchBarProps = {
 };
 
 const sizeMap = {
-  sm: "h-7 text-xs px-2.5",
-  default: "h-8 text-sm px-2.5",
-  lg: "h-9 text-sm px-3",
+  sm: "h-7 text-xs",
+  default: "h-8 text-sm",
+  lg: "h-9 text-sm",
 };
 
 const iconSizeMap = {
@@ -55,6 +55,7 @@ function SearchBar({
 
   return (
     <div
+      data-slot="search-bar"
       className={cn(
         "relative flex w-full items-center rounded-lg border border-input bg-transparent transition-colors",
         "focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
@@ -101,7 +102,7 @@ function SearchBar({
           type="button"
           onClick={handleClear}
           aria-label="Clear search"
-          className="absolute right-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none"
+          className="absolute right-2 rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

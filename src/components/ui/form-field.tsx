@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
@@ -26,7 +28,7 @@ function FormField({
   const errorId = error ? `${inputId}-error` : undefined;
 
   return (
-    <div className={cn("flex w-full flex-col gap-1.5", className)}>
+    <div data-slot="form-field" className={cn("flex w-full flex-col gap-1.5", className)}>
       {label && (
         <Label htmlFor={inputId}>
           {label}

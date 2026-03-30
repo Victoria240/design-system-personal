@@ -151,7 +151,7 @@ function Alert({
           type="button"
           onClick={onDismiss}
           aria-label="Dismiss alert"
-          className="ml-auto -mt-0.5 -mr-0.5 flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="ml-auto -mt-0.5 -mr-0.5 flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

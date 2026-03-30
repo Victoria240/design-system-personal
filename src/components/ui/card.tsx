@@ -1,18 +1,31 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /* ─── Card root ─────────────────────────────────────────── */
 
-type CardProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** Visual treatment */
-  variant?: "elevated" | "outlined" | "filled";
-  /** Removes default padding — useful for full-bleed images */
-  noPadding?: boolean;
-};
+const cardVariants = cva("rounded-xl p-6", {
+  variants: {
+    variant: {
+      elevated: "bg-card text-card-foreground shadow-sm",
+      outlined: "border border-border bg-card text-card-foreground",
+      filled: "bg-muted text-foreground",
+    },
+    noPadding: {
+      true: "p-0",
+    },
+  },
+  defaultVariants: {
+    variant: "outlined",
+  },
+});
+
+type CardProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof cardVariants>;
 
 function Card({
-  variant = "elevated",
-  noPadding = false,
+  variant,
+  noPadding,
   className,
   children,
   ...props
@@ -20,15 +33,7 @@ function Card({
   return (
     <div
       data-slot="card"
-      className={cn(
-        "rounded-xl",
-        !noPadding && "p-6",
-        variant === "elevated" && "bg-card text-card-foreground shadow-sm",
-        variant === "outlined" &&
-          "border border-border bg-card text-card-foreground",
-        variant === "filled" && "bg-muted text-foreground",
-        className
-      )}
+      className={cn(cardVariants({ variant, noPadding }), className)}
       {...props}
     >
       {children}
