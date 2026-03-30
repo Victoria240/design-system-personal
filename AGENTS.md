@@ -55,6 +55,7 @@ These apply the universal principles to this codebase's component system. For th
 - **Typography stacking**: `Typography variant="label"` and `variant="caption"` both render as `<span>` (inline). Any label+description pair MUST have a `flex flex-col gap-0.5` wrapper or they run inline regardless of `mt-*`.
 - **Card variants**: `elevated` = shadow (shadow-sm). `outlined` = border only. `filled` = muted background. Default to `outlined` — only use `elevated` when a surface genuinely needs to float above its surroundings.
 - **Avatar sizes**: `size="sm"` = 24px (headers, sidebars). `size="default"` = 32px (2-line list rows). `size="lg"` = 40px (profile display). Adjacent icon controls should visually match the avatar's size tier.
+- **Avatar fallback font weight**: DS AvatarFallback uses `font-medium` (500) — matches Figma Avatar component which uses `Inter Medium` across all sizes. Sidebar custom avatar divs intentionally use `font-semibold` (600) — Figma sidebar component specifies Semi Bold for the small 8–9px initials for legibility. Do not change either: medium on DS Avatar, semibold on sidebar custom divs.
 - **Badge variants**: `success` for positive outcomes and premium states. `destructive` for failures and risks. `default` for quiet neutral status (completed, info). Never use `default` where the meaning is positive — it reads as gray/neutral.
 - **Brand token**: always `bg-brand` / `text-brand` — never hardcoded color values.
 - **Font**: Inter via `next/font/google`. No Geist anywhere in this project.
